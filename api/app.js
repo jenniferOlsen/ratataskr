@@ -19,6 +19,10 @@ const appHooks = require('./app.hooks');
 const webpack = require('webpack');
 const config = require('../webpack.config.js');
 
+const authentication = require('./authentication');
+
+const mongoose = require('./mongoose');
+
 const app = feathers();
 const compiler = webpack(config);
 
@@ -41,10 +45,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set up Plugins and providers
 app.configure(hooks());
 
+app.configure(mongoose);
+
 app.configure(socketio());
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);
+app.configure(authentication);
 // Set up our services (see `services/index.js`)
 app.configure(services);
 // Configure a middleware for 404s and the error handler

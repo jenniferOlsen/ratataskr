@@ -5,5 +5,38 @@
   "paginate": {
     "default": 10,
     "max": 50
-  }
+  },
+  "authentication": {
+    "secret": "4f01294aa3fea3d46482a91c66ffea435acde4def6b31378001b009a390be3aca42f018ed291131a8c88ebe9801c2017dddb33ebc84298b24f40c1630cf05f13892708b65335440f657e147c1dc23d048200b1ed6f8e02f1f8d92181839be65f35fa88eb3e9c03c47007c30f776aff1d4d9313da5fba3d13554b4d65f6830898d24171c1942c8f68380b997e5f3ab3626a4a4d8817f354b45c783837f62112e4689fef2d6d7b9ef2ec2396684c87a1ad2ecd5e5a8649c115923cc73e094f2af10266eddfbf8638de834fd4edec4247bf3522f2f7f70d71fe60dff13f8d33a0800a6fc82a9d5d93b570bbdb9f8361d9b19bfbd57d71e43339d7175af42e02d0a8",
+    "strategies": [
+      "jwt"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "type": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "google": {
+      "clientID": "394797880532-tpr6utef277ilmct87rijq75gd2iferl.apps.googleusercontent.com",
+      "clientSecret": "S7Q4C6VxncagsOZNCASN3Ut3",
+      "successRedirect": "/",
+      "scope": [
+        "profile openid email"
+      ]
+    },
+    "cookie": {
+      "enabled": true,
+      "name": "feathers-jwt",
+      "httpOnly": false,
+      "secure": false
+    }
+  },
+  "mongodb": "mongodb://localhost:27017/ratataskr"
 }

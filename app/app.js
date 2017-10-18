@@ -1,16 +1,38 @@
-const feathers = require('feathers-client');
-const io = require('socket.io-client');
-
-const socket = io();
-export const app = feathers()
-  .configure(feathers.socketio(socket))
-  .configure(feathers.hooks());
-
 import React, { Component } from 'react';
+import feathers from 'feathers-client';
+import socketio from 'feathers-socketio/client';
+import hooks from 'feathers-hooks';
+import errors from 'feathers-errors'; // An object with all of the custom error types.
+import auth from 'feathers-authentication-client';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3030', {transports: ['websocket']});
+const feathersClient = feathers()
+   .configure(feathers.hooks())
+   .configure(feathers.socketio(socket))
+   .configure(feathers.authentication({
+     cookie: 'feathers-jwt'
+   }));
+
+ feathersClient.authenticate()
+   .then(response => {
+     console.info('Feathers Client has Authenticated with the JWT access token!');
+     console.log(response);
+   })
+   .catch(error => {
+     console.info('We have not logged in with OAuth, yet.  This means there\'s no cookie storing the accessToken.  As a result, feathersClient.authenticate() failed.');
+     console.log(error);
+});
+
 class App extends Component {
   render() {
     return (
-      <h1>Welcome to Ratataskr!</h1>
+      <div>
+        <h1>Welcome to Ratataskr!</h1>
+        <p><br/>
+          <a href="/auth/google">Login With Google</a>
+        </p>
+      </div>
     );
   }
 }
