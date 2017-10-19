@@ -5,8 +5,10 @@ import hooks from 'feathers-hooks';
 import errors from 'feathers-errors'; // An object with all of the custom error types.
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
+import rest from 'feathers-rest/client';
 
 const socket = io('http://localhost:3030', {transports: ['websocket']});
+const restClient = rest();
 const feathersClient = feathers()
    .configure(feathers.hooks())
    .configure(feathers.socketio(socket))

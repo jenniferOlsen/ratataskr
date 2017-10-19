@@ -13,11 +13,12 @@
     ],
     "path": "/authentication",
     "service": "users",
+    "entity": "user",
     "jwt": {
       "header": {
         "type": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "http://localhost:3030",
       "subject": "anonymous",
       "issuer": "feathers",
       "algorithm": "HS256",
