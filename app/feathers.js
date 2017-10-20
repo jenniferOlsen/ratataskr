@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-//import feathers from 'feathers';
 import feathers from 'feathers-client';
 import socketio from 'feathers-socketio/client';
 import hooks from 'feathers-hooks';
@@ -27,17 +25,4 @@ const feathersClient = feathers()
      console.log(error);
 });
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Welcome to Ratataskr!</h1>
-        <p><br/>
-          <a href="/auth/google">Login With Google</a>
-        </p>
-      </div>
-    );
-  }
-}
-
-export default App;
+export default feathers;
