@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-//import feathers from 'feathers';
 import feathers from 'feathers-client';
 import socketio from 'feathers-socketio/client';
 import hooks from 'feathers-hooks';
-import errors from 'feathers-errors'; // An object with all of the custom error types.
+import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
 import rest from 'feathers-rest/client';
@@ -17,6 +16,7 @@ const feathersClient = feathers()
      cookie: 'feathers-jwt'
    }));
 
+// See api/models/users.model.js for available user fields
  feathersClient.authenticate()
    .then(response => {
      console.info('Feathers Client has Authenticated with the JWT access token!');

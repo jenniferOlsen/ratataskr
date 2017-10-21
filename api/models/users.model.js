@@ -5,10 +5,10 @@
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const users = new mongooseClient.Schema({
-  
-  
     googleId: { type: String },
-  
+    email: { type: String },
+    name: { type: String },
+    picture: { type: String },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
