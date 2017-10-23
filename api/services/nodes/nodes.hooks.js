@@ -1,13 +1,17 @@
 const { authenticate } = require('feathers-authentication').hooks;
+const { setNow } = require('feathers-hooks-common');
+const populateNodeCreator = require('../../hooks/populate-node-creator');
+
+const populateNodeUpdater = require('../../hooks/populate-node-updater');
 
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [populateNodeCreator()],
+    update: [populateNodeUpdater()],
+    patch: [populateNodeUpdater()],
     remove: []
   },
 
@@ -15,9 +19,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [setNow('createdAt')],
+    update: [setNow('updatedAt')],
+    patch: [setNow('updatedAt')],
     remove: []
   },
 

@@ -7,10 +7,17 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const nodes = new Schema({
     name: { type: String, required: true },
-    details: { type: String, required: false },
+    details: { type: String },
     completionStatus: { type: String, required: true, default: 'incomplete' },
-    children: { type: Array, required: false },
+    children: { type: Array },
+    parents: { type: Array},
+    connectedTo: { type: Array},
+    blocks: { type: Array },
+    blockedBy: { type: Array},
+    dirty: { type: Boolean, default: false },
+    createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
     createdAt: { type: Date, default: Date.now },
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'User' },
     updatedAt: { type: Date, default: Date.now }
   });
 

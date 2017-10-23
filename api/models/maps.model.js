@@ -7,6 +7,16 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
   const maps = new Schema({
     title: { type: String, required: true },
+    coordinatesRange: { type: Array, required: true },
+    nodes: {
+      id: { type: Schema.Types.ObjectId, ref: 'Node' },
+      coordinates: { type: Array }
+    },
+    users: {
+      owner: { type: Schema.Types.ObjectId, ref: 'User' },
+      editors: { type: Array },
+      readers: { type: Array }
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });

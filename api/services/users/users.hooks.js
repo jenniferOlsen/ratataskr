@@ -1,5 +1,5 @@
 const { authenticate } = require('feathers-authentication').hooks;
-const commonHooks = require('feathers-hooks-common');
+const { setNow } = require('feathers-hooks-common');
 const { restrictToOwner } = require('feathers-authentication-hooks');
 
 
@@ -31,9 +31,9 @@ module.exports = {
     ],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [setNow('createdAt')],
+    update: [setNow('updatedAt')],
+    patch: [setNow('updatedAt')],
     remove: []
   },
 

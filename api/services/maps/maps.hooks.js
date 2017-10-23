@@ -1,8 +1,12 @@
 const { authenticate } = require('feathers-authentication').hooks;
+const { setNow } = require('feathers-hooks-common');
+const populateMapNodes = require('../../hooks/populate-map-nodes');
+
+const populateMapUsers = require('../../hooks/populate-map-users');
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ],
+    all: [authenticate('jwt'), populateMapUsers(), populateMapNodes()],
     find: [],
     get: [],
     create: [],
@@ -15,9 +19,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [setNow('createdAt')],
+    update: [setNow('updatedAt')],
+    patch: [setNow('updatedAt')],
     remove: []
   },
 
