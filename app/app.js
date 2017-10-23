@@ -6,6 +6,7 @@ import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
 import rest from 'feathers-rest/client';
+import './styles.scss';
 
 const socket = io('http://localhost:3030', {transports: ['websocket']});
 const restClient = rest();
@@ -33,7 +34,7 @@ class App extends Component {
       <div>
         <h1>Welcome to Ratataskr!</h1>
         <p><br/>
-          <a href="/auth/google">Login With Google</a>
+          <a className="button" href="/auth/google">Login With Google</a>
         </p>
       </div>
     );
