@@ -43,7 +43,7 @@ class App extends Component {
         <p><br/>
           <a className="button" href="/auth/google">Login With Google</a>
         </p>
-        <a onClick={this.newMap}>Add new map</a>
+        <p><a onClick={this.newMap}>Add new map</a></p>
       </div>
     );
   }
