@@ -7,20 +7,15 @@ const rest = require('feathers-rest');
 const feathers = require('feathers');
 const configuration = require('feathers-configuration');
 const hooks = require('feathers-hooks');
-
 const socketio = require('feathers-socketio');
-
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
-
 const middleware = require('./middleware');
 const services = require('./services');
 const appHooks = require('./app.hooks');
 const webpack = require('webpack');
 const config = require('../webpack.config.js');
-
 const authentication = require('./authentication');
-
 const mongoose = require('./mongoose');
 
 const app = feathers();
@@ -47,8 +42,8 @@ app.configure(rest());
 app.configure(hooks());
 
 app.configure(mongoose);
-
 app.configure(socketio());
+app.listen(3030);
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware);

@@ -6,19 +6,19 @@ import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
 import rest from 'feathers-rest/client';
+
 import './styles.scss';
 
 const socket = io('http://localhost:3030', {transports: ['websocket']});
 const restClient = rest();
-const feathersClient = feathers()
+const app = feathers()
    .configure(feathers.hooks())
    .configure(feathers.socketio(socket))
    .configure(feathers.authentication({
      cookie: 'feathers-jwt'
    }));
-
-// See api/models/users.model.js for available user fields
- feathersClient.authenticate()
+const mapsService = app.service('/maps');
+ app.authenticate()
    .then(response => {
      console.info('Feathers Client has Authenticated with the JWT access token!');
      console.log(response);
@@ -29,6 +29,13 @@ const feathersClient = feathers()
 });
 
 class App extends Component {
+
+  newMap() {
+    mapsService.create({ title: 'New Test', coordinatesRange: [0,0] }).then(function(response) {
+      console.log('New Map?', response);
+    })
+  }
+
   render() {
     return (
       <div>
@@ -36,6 +43,7 @@ class App extends Component {
         <p><br/>
           <a className="button" href="/auth/google">Login With Google</a>
         </p>
+        <a onClick={this.newMap}>Add new map</a>
       </div>
     );
   }
