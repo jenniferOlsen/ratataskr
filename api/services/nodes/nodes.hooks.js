@@ -1,4 +1,5 @@
 const { authenticate } = require('feathers-authentication').hooks;
+const hooks = require('feathers-authentication-hooks');
 const { setNow } = require('feathers-hooks-common');
 const populateNodeCreator = require('../../hooks/populate-node-creator');
 
@@ -9,9 +10,9 @@ module.exports = {
     all: [ authenticate('jwt') ],
     find: [],
     get: [],
-    create: [populateNodeCreator()],
-    update: [populateNodeUpdater()],
-    patch: [populateNodeUpdater()],
+    create: [hooks.associateCurrentUser({ as: 'createdBy' })],
+    update: [hooks.associateCurrentUser({ as: 'updatedBy' })],
+    patch: [hooks.associateCurrentUser({ as: 'updatedBy' })],
     remove: []
   },
 

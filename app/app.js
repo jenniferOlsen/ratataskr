@@ -18,25 +18,28 @@ const app = feathers()
      cookie: 'feathers-jwt'
    }));
 const mapsService = app.service('/maps');
- app.authenticate()
-   .then(response => {
-     console.info('Feathers Client has Authenticated with the JWT access token!');
-     console.log(response);
-   })
-   .catch(error => {
-     console.info('We have not logged in with OAuth, yet.  This means there\'s no cookie storing the accessToken.  As a result, feathersClient.authenticate() failed.');
-     console.log(error);
+const usersService = app.service('/users');
+
+app.authenticate()
+ .then(response => {
+   console.info('Feathers Client has Authenticated with the JWT access token!');
+   console.log(response);
+ })
+ .catch(error => {
+   console.info('We have not logged in with OAuth, yet.  This means there\'s no cookie storing the accessToken.  As a result, feathersClient.authenticate() failed.');
+   console.log(error);
 });
 
 class App extends Component {
 
   newMap() {
-    mapsService.create({ title: 'New Test', coordinatesRange: [0,0] }).then(function(response) {
+    mapsService.create({ title: 'New Test 2', coordinatesRange: [0,0] }).then(function(response) {
       console.log('New Map?', response);
     })
   }
 
   render() {
+
     return (
       <div>
         <h1>Welcome to Ratataskr!</h1>
