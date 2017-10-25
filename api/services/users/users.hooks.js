@@ -11,13 +11,21 @@ const restrict = [
   })
 ];
 
+function addGoogleProfile() {
+  return function(hook) {
+    hook.data.name = hook.data.google.profile.displayName;
+    hook.data.email = hook.data.google.profile.emails[0].value;
+    hook.data.picture = hook.data.google.profile.photos[0].value;
+  }
+}
+
 module.exports = {
   before: {
     all: [],
     find: [ authenticate('jwt') ],
     get: [ ...restrict ],
-    create: [  ],
-    update: [ ...restrict ],
+    create: [ addGoogleProfile() ],
+    update: [ addGoogleProfile() ],
     patch: [ ...restrict ],
     remove: [ ...restrict ]
   },
