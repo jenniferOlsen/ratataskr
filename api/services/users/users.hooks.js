@@ -22,7 +22,7 @@ function addGoogleProfile() {
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
+    find: [ authenticate('jwt')],
     get: [ ...restrict ],
     create: [ addGoogleProfile() ],
     update: [ addGoogleProfile() ],

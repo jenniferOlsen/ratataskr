@@ -1,7 +1,6 @@
 const { authenticate } = require('feathers-authentication').hooks;
 const hooks = require('feathers-authentication-hooks');
 const { setNow } = require('feathers-hooks-common');
-const populateNodeCreator = require('../../hooks/populate-node-creator');
 
 const populateNodeUpdater = require('../../hooks/populate-node-updater');
 

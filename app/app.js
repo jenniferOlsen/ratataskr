@@ -45,7 +45,8 @@ class App extends Component {
   constructor(props) {
   super(props);
   this.state = {
-    name: currentUser.name
+    name: currentUser.name,
+    maps: []
   };
 }
 
@@ -55,11 +56,19 @@ class App extends Component {
     })
   }
 
+  listMaps() {
+    socket.emit('maps::get', '59f0f573e42dfda6c5bc4cef', (error, data) => {
+      console.log('socket maps', data)
+      if (error) {
+        console.error(error)
+      }
+    })
+  }
+
 
 
   render() {
     console.log('state ', this.state.name);
-    // console.log('name', user);
     console.log('curent', currentUser)
 
     return (
@@ -70,6 +79,8 @@ class App extends Component {
         </p>
         <p>User: {this.state.user}</p>
         <p><a onClick={this.newMap}>Add new map</a></p>
+        <p><a onClick={this.listMaps}>List maps</a></p>
+        <p>Maps: {this.state.maps}</p>
       </div>
     );
   }
