@@ -8,7 +8,7 @@ module.exports = function () {
   const app = this;
   const Model = createModel(app);
   const paginate = app.get('paginate');
-
+  let ObjectIdHook = function(options) { return }
   const options = {
     name: 'maps',
     Model,
@@ -21,6 +21,22 @@ module.exports = function () {
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('maps');
 
+  const ObjectID = require('mongodb').ObjectID;
+  service.hooks({
+    before: {
+      find(hook) {
+        const { query = {} } = hook.params;
+
+        if(query._id) {
+          query._id  = new ObjectID(query._id);
+        }
+        hook.params.query = query;
+        console.log(query)
+
+        return Promise.resolve(hook);
+      }
+    }
+  });
   service.hooks(hooks);
 
   if (service.filter) {

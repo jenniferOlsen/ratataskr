@@ -5,20 +5,17 @@ import hooks from 'feathers-hooks';
 import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
-import rest from 'feathers-rest/client';
 
 import './styles.scss';
 
 const socket = io('http://localhost:3030', {transports: ['websocket']});
-const restClient = rest();
 const app = feathers()
    .configure(feathers.hooks())
    .configure(feathers.socketio(socket))
    .configure(feathers.authentication({
      cookie: 'feathers-jwt'
    }));
-const mapsService = app.service('/maps');
-const usersService = app.service('/users');
+
 let currentUser = '';
 
 app.authenticate()
@@ -36,8 +33,16 @@ app.authenticate()
   console.log('User', app.get('user'));
   currentUser = app.get('user');
 })
+.then(user => {
+  socket.emit('maps::find', { 'users.owner': currentUser._id }, (error, data) => {
+    console.log('socket maps', data)
+    if (error) {
+      console.error(error)
+    }
+  });
+})
  .catch(error => {
-   console.info('We have not logged in with OAuth, yet.  This means there\'s no cookie storing the accessToken.  As a result, feathersClient.authenticate() failed.');
+   console.info('We have not logged in with OAuth, yet. As a result, feathersClient.authenticate() failed.');
    console.log(error);
 });
 
@@ -51,13 +56,7 @@ class App extends Component {
 }
 
   newMap() {
-    mapsService.create({ title: 'New Test 2', coordinatesRange: [0,0] }).then(function(response) {
-      console.log('New Map?', response);
-    })
-  }
-
-  listMaps() {
-    socket.emit('maps::get', '59f0f573e42dfda6c5bc4cef', (error, data) => {
+    socket.emit('maps::create', {title:'New Test 2', coordinatesRange: [0,0] }, (error, data) => {
       console.log('socket maps', data)
       if (error) {
         console.error(error)
@@ -65,12 +64,7 @@ class App extends Component {
     })
   }
 
-
-
   render() {
-    console.log('state ', this.state.name);
-    console.log('curent', currentUser)
-
     return (
       <div>
         <h1>Welcome to Ratataskr!</h1>
@@ -79,7 +73,6 @@ class App extends Component {
         </p>
         <p>User: {this.state.user}</p>
         <p><a onClick={this.newMap}>Add new map</a></p>
-        <p><a onClick={this.listMaps}>List maps</a></p>
         <p>Maps: {this.state.maps}</p>
       </div>
     );

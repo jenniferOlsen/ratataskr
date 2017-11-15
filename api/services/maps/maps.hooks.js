@@ -2,13 +2,12 @@ const { authenticate } = require('feathers-authentication').hooks;
 const hooks = require('feathers-authentication-hooks');
 const { setNow } = require('feathers-hooks-common');
 const populateMapNodes = require('../../hooks/populate-map-nodes');
-
 const populateMapUsers = require('../../hooks/populate-map-users');
 
 module.exports = {
   before: {
     all: [authenticate('jwt'), populateMapUsers(), populateMapNodes()],
-    find: [hooks.queryWithCurrentUser()],
+    find: [],
     get: [],
     create: [hooks.associateCurrentUser({ as: 'users.owner' })],
     update: [],
