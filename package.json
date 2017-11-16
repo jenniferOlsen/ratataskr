@@ -28,7 +28,7 @@
   "scripts": {
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint api/. test/. --config .eslintrc.json",
-    "start": " node api/",
+    "start": "node api/",
     "mocha": "mocha test/ --recursive",
     "build": "webpack"
   },

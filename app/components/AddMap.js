@@ -5,21 +5,15 @@ import hooks from 'feathers-hooks';
 import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
 import io from 'socket.io-client';
+import Login from './Login';
 
-import Login from './components/Login';
-import AddMap from './components/AddMap';
-import './styles.scss';
+import '../styles.scss';
 
-
-class App extends Component {
+class AddMap extends Component {
   constructor(props) {
   super(props);
-  this.state = {
-    // name: currentUser.name,
-    maps: []
-  };
+  this.state = { };
 }
-
   componentWillMount() {
     const socket = io('http://localhost:3030', {transports: ['websocket']});
     const app = feathers()
@@ -30,19 +24,20 @@ class App extends Component {
     }));
   }
 
+  newMap() {
+    socket.emit('maps::create', {title:'New from Component', coordinatesRange: [0,0] }, (error, data) => {
+      console.log('new map', data)
+      if (error) {
+        console.error(error)
+      }
+    })
+  }
+
   render() {
     return (
-      <div>
-        <h1>Welcome to Ratataskr!</h1>
-        <p><br/>
-        <Login />
-        </p>
-        <p>User: {this.state.user}</p>
-        <AddMap />
-        <p>Maps: {this.state.maps}</p>
-      </div>
+      <a onClick={this.newMap}>Add new map</a>
     );
   }
 }
 
-export default App;
+export default AddMap;
