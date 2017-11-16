@@ -25,6 +25,8 @@ class AddMap extends Component {
   }
 
   newMap() {
+    // need to find a way to make socket and the JWT token available everywhere
+    // maybe in the redux store? https://github.com/mjrussell/redux-auth-wrapper & https://github.com/mjrussell/react-redux-jwt-auth-example/tree/react-router-redux
     socket.emit('maps::create', {title:'New from Component', coordinatesRange: [0,0] }, (error, data) => {
       console.log('new map', data)
       if (error) {
