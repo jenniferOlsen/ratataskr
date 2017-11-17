@@ -26,13 +26,10 @@ module.exports = function () {
     before: {
       find(hook) {
         const { query = {} } = hook.params;
-
         if(query._id) {
           query._id  = new ObjectID(query._id);
         }
         hook.params.query = query;
-        console.log(query)
-
         return Promise.resolve(hook);
       }
     }
