@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import feathers from 'feathers-client';
-import socketio from 'feathers-socketio/client';
-import hooks from 'feathers-hooks';
-import errors from 'feathers-errors';
-import auth from 'feathers-authentication-client';
-import io from 'socket.io-client';
 
-import Login from './components/Login';
 import AddMap from './components/AddMap';
+import Utils from './utils';
+import Store from './store';
 import './styles.scss';
 
 
@@ -21,24 +16,29 @@ class App extends Component {
 }
 
   componentWillMount() {
-    const socket = io('http://localhost:3030', {transports: ['websocket']});
-    const app = feathers()
-       .configure(feathers.hooks())
-       .configure(feathers.socketio(socket))
-       .configure(feathers.authentication({
-         cookie: 'feathers-jwt'
-    }));
+    Store.registerSocket();
+    this.setState(Store.getCurrentState());
+    console.log('state', this.state)
   }
+
+  // componentDidMount() {
+  //   console.log('this', this)
+  //   // Store.addChangeListener(this.onChange);
+  // }
+  //
+  // componentWillUnmount() {
+  //   Store.removeChangeListener(this.onChange);
+  // }
 
   render() {
     return (
       <div>
         <h1>Welcome to Ratataskr!</h1>
         <p><br/>
-        <Login />
+          <a className="button" href="/auth/google" onClick={Utils.authenticate(this.state.socket, this.state.app)}>Login With Google</a>
         </p>
         <p>User: {this.state.user}</p>
-        <AddMap />
+        <AddMap socket={this.state.socket}/>
         <p>Maps: {this.state.maps}</p>
       </div>
     );

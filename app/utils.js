@@ -1,29 +1,7 @@
-import React, { Component } from 'react';
-import feathers from 'feathers-client';
-import socketio from 'feathers-socketio/client';
-import hooks from 'feathers-hooks';
-import errors from 'feathers-errors';
 import auth from 'feathers-authentication-client';
-import io from 'socket.io-client';
 
-import '../styles.scss';
-
-
-class Login extends Component {
-  constructor(props) {
-  super(props);
-  this.state = {};
-}
-
-  render() {
-    const socket = io('http://localhost:3030', {transports: ['websocket']});
-    const app = feathers()
-       .configure(feathers.hooks())
-       .configure(feathers.socketio(socket))
-       .configure(feathers.authentication({
-         cookie: 'feathers-jwt'
-       }));
-
+const Utils = {
+  authenticate: function(socket, app) {
     let currentUser = '';
     app.authenticate()
      .then(response => {
@@ -52,10 +30,8 @@ class Login extends Component {
        console.info('We have not logged in with OAuth, yet. As a result, feathersClient.authenticate() failed.');
        console.log(error);
     });
-    return (
-      <a className="button" href="/auth/google">Login With Google</a>
-    );
+
   }
 }
 
-export default Login;
+export default Utils;
