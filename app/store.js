@@ -10,7 +10,9 @@ const Store = new EventEmitter();
 const CHANGE_EVENT = 'change';
 const currentState = {
   app: null,
-  socket: null
+  socket: null,
+  user: null,
+  maps: null
 };
 
 Store.emitChange = function() {
@@ -39,6 +41,16 @@ Store.registerSocket = function() {
   }));
   currentState.app = app;
   currentState.socket = socket;
+}
+
+// Helper Functions
+Store.setUser = function(user) {
+  currentState.user = user;
+  console.log('store user', user)
+}
+Store.setMaps = function(maps) {
+  currentState.maps = maps;
+  console.log('store maps', currentState)
 }
 
 

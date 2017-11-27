@@ -1,4 +1,5 @@
 import auth from 'feathers-authentication-client';
+import Store from './store';
 
 const Utils = {
   authenticate: function(socket, app) {
@@ -17,10 +18,12 @@ const Utils = {
       app.set('user', user);
       console.log('User', app.get('user'));
       currentUser = app.get('user');
+      Store.setUser(currentUser);
     })
     .then(user => {
       socket.emit('maps::find', { 'users.owner': currentUser._id }, (error, data) => {
         console.log('socket maps', data)
+        Store.setMaps(data);
         if (error) {
           console.error(error)
         }
