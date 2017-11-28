@@ -9,8 +9,6 @@ class AddMap extends Component {
 }
 
   newMap(){
-    console.log('this', this)
-    console.log('props', this.props)
     this.props.socket.emit('maps::create', {title:'New from Component', coordinatesRange: [0,0] }, (error, data) => {
       console.log('new map', data)
       if (error) {

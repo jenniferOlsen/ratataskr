@@ -15,8 +15,9 @@ const currentState = {
   maps: null
 };
 
-Store.emitChange = function() {
+Store.emitChange = function()  {
   this.emit(CHANGE_EVENT);
+  console.log('updated state', currentState)
 }
 
 Store.addChangeListener = function(callback) {
@@ -46,11 +47,11 @@ Store.registerSocket = function() {
 // Helper Functions
 Store.setUser = function(user) {
   currentState.user = user;
-  console.log('store user', user)
-}
+  this.emitChange();
+};
 Store.setMaps = function(maps) {
   currentState.maps = maps;
-  console.log('store maps', currentState)
+  this.emitChange();
 }
 
 
