@@ -1,8 +1,11 @@
-$red: red;
-
+$button-color: #569852;
 .button {
-  background: $red;
+  background: $button-color;
   padding: 20px;
   color: white;
   text-decoration: none;
+}
+
+p {
+  margin-bottom: 2em;
 }
